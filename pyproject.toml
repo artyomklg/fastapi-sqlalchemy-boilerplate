@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "fastapi-sqlalchemy-boilerplate"
+version = "0.1.0"
+description = ""
+authors = ["artyomklg <artem0801200269@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = {extras = ["standart"], version = "^0.115.3"}
+sqlalchemy = "^2.0.36"
+asyncpg = "^0.30.0"
+alembic = "^1.13.3"
+pydantic-settings = "^2.6.0"
+dishka = "^1.4.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
