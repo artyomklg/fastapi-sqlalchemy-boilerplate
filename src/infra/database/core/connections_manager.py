@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
@@ -13,10 +13,10 @@ from src.infra.database.config import DatabaseConfig
 @dataclass
 class DatabaseConnectionsManager:
     _db_config: DatabaseConfig
-    _engine: AsyncEngine | None = None
-    _ro_engine: AsyncEngine | None = None
-    _session_factory: async_sessionmaker[AsyncSession] | None = None
-    _ro_session_factory: async_sessionmaker[AsyncSession] | None = None
+    _engine: AsyncEngine | None = field(default=None, init=False)
+    _ro_engine: AsyncEngine | None = field(default=None, init=False)
+    _session_factory: async_sessionmaker[AsyncSession] | None = field(default=None, init=False)
+    _ro_session_factory: async_sessionmaker[AsyncSession] | None = field(default=None, init=False)
 
     def _get_engine(self) -> AsyncEngine:
         if self._engine is None:
