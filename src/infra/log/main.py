@@ -3,8 +3,8 @@ import logging
 from src.infra.log.config import LogConfig
 
 
-def setup_logging(conf: LogConfig):
-    logging.basicConfig(format=conf.log_format, datefmt=conf.log_datefmt)
+def setup_logging(log_conf: LogConfig) -> None:
+    logging.basicConfig(format=log_conf.format, datefmt=log_conf.datefmt)
     logger = logging.getLogger("src")
 
-    logger.setLevel(conf.log_level)
+    logger.setLevel(log_conf.level)

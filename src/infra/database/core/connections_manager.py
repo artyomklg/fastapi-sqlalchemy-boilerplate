@@ -21,16 +21,18 @@ class DatabaseConnectionsManager:
     def _get_engine(self) -> AsyncEngine:
         if self._engine is None:
             self._engine = create_async_engine(
-                self._db_config.db_uri,
-                pool_size=self._db_config.db_pool_size,
+                self._db_config.uri,
+                pool_size=self._db_config.pool_size,
+                echo=self._db_config.echo,
             )
         return self._engine
 
     def _get_ro_engine(self) -> AsyncEngine:
         if self._ro_engine is None:
             self._ro_engine = create_async_engine(
-                self._db_config.db_uri,
-                pool_size=self._db_config.db_ro_pool_size,
+                self._db_config.ro_uri,
+                pool_size=self._db_config.ro_pool_size,
+                echo=self._db_config.ro_echo,
             )
         return self._ro_engine
 

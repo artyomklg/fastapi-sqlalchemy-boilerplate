@@ -10,7 +10,7 @@ config = context.config
 
 config.set_main_option(
     "sqlalchemy.url",
-    f"{get_main_config().db.db_uri}?async_fallback=True",
+    f"{get_main_config().db.uri}?async_fallback=True",
 )
 
 if config.config_file_name is not None:
