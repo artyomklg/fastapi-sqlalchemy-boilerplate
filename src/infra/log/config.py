@@ -3,7 +3,7 @@ from typing import Final, Literal
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 LOG_DEFAULT_FORMAT: Final[str] = (
-    "%(asctime)s [%(process)d] %(module)-10s:%(lineno)-3d %(levelname)-7s - %(message)s"
+    "%(asctime)s [%(process)d] %(module)15s:%(lineno)-4d %(levelname)s - %(message)s"
 )
 LOG_DEFAULT_DATEFMT: Final[str] = "[%Y-%m-%d %H:%M:%S %z]"
 
@@ -14,3 +14,4 @@ class LogConfig(BaseSettings):
     level: Literal["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"] = "INFO"
     format: str = LOG_DEFAULT_FORMAT
     datefmt: str = LOG_DEFAULT_DATEFMT
+    use_colors: bool = True

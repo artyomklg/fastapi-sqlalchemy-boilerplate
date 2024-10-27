@@ -22,4 +22,5 @@ def create_app():
     setup_dishka(container, app)
     setup_handlers(app)
 
+    logger.info("Application configured.")
     return app
