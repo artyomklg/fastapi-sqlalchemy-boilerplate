@@ -1,0 +1,20 @@
+services:
+  main-app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: main-app
+    ports:
+      - "8005:8000"
+    command:
+      - sh
+      - -c
+      - "gunicorn -c gunicorn.conf.py src.main:app"
+    volumes:
+      - ../src/:/app/src/
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
