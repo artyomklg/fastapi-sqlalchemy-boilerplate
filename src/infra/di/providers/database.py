@@ -44,7 +44,6 @@ class SqlAlchemySessionProvider(Provider):
     @provide(scope=Scope.APP, provides=ROasync_sessionmaker)
     def ro_async_session_maker(self, engine: ROAsyncEngine):
         return async_sessionmaker(
-            isolation_level="AUTOCOMMIT",
             bind=engine,
         )
 
@@ -65,3 +64,43 @@ class SqlAlchemySessionProvider(Provider):
     async def transaction_context(self, session: AsyncSession):
         async with DBTransactionContext(session) as tc:
             yield tc
+
+
+#!
+#! Пример создания обычных и ReadOnly репозиториев .
+#! Тут насрано жидко пока. Но я думаю как без этого автоматом закрывать сессии на каждом запросе
+#!
+
+# class SomeReader(Protocol):
+#     async def get_one(self) -> int: ...
+
+# class SomeRepo(SomeReader, Protocol): ...
+
+# @dataclass
+# class SqlalchemySomeRepository(SqlalchemySessionMixin):
+#     g_repo: SqlalchemyGenericRepository[SomeORM]
+
+#     async def get_one(self) -> int:
+#         res = await self._session.execute(text("select 1")) # ну допустим
+#         return res.scalar_one()
+
+# class SomeProvider(Provider):
+#     scope = Scope.REQUEST
+
+#     @provide(provides=SomeReader)
+#     async def some_reader(self, session_factory: ROAsyncSessionFactory):
+#         reader = SqlalchemySomeRepository(
+#             session_factory, SqlalchemyGenericRepository(session_factory, SomeORM)
+#         )
+#         yield reader
+#         await (  #? мдаааааа, а по другому не работает нихуя. gb сессии не чистит
+#             reader._close_sessions()
+#         )
+
+# @provide(provides=SomeRepo)
+# async def some_repo(self, session_factory: AsyncSessionFactory):
+#     repo = SqlalchemySomeRepository(
+#         session_factory, SqlalchemyGenericRepository(session_factory, SomeORM)
+#     )
+#     yield repo
+#     await reader._close_sessions()
