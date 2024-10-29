@@ -2,7 +2,7 @@ from functools import lru_cache
 
 from dishka import make_async_container
 
-from src.infra.di.providers import ConfigProvider, DatabaseProvider
+from src.infra.di.providers import ConfigProvider, SqlAlchemySessionProvider
 from src.infra.main_config import MainConfig, get_main_config
 
 
@@ -10,7 +10,7 @@ from src.infra.main_config import MainConfig, get_main_config
 def get_container():
     return make_async_container(
         ConfigProvider(),
-        DatabaseProvider(),
+        SqlAlchemySessionProvider(),
         context={
             MainConfig: get_main_config(),
         },

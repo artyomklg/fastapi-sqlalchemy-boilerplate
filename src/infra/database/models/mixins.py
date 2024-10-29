@@ -1,16 +1,16 @@
+import uuid
 from datetime import datetime
-from uuid import UUID
+from typing import Annotated
 
-from sqlalchemy import text
+from sqlalchemy import BigInteger, Identity, text
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
-
-class IntIdORMMixin:
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-
-
-class UuidIdORMMixin:
-    id: Mapped[UUID] = mapped_column(primary_key=True, autoincrement=True)
+IntPK = Annotated[int, mapped_column(BigInteger, Identity(), primary_key=True, autoincrement=True)]
+UuidPK = Annotated[
+    uuid.UUID,
+    mapped_column(UUID(as_uuid=True), primary_key=True, server_default=text("uuid_generate_v4()")),
+]
 
 
 class CreatedAtORMMixin:

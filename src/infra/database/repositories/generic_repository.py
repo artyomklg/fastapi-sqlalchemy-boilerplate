@@ -1,16 +1,14 @@
 from dataclasses import dataclass
-from typing import Any, Generic, TypeVar
+from typing import Any, Generic
 
 from sqlalchemy import ColumnExpressionArgument, UnaryExpression, select
 
-from src.infra.database.models.base import BaseORM
-from src.infra.database.repositories.mixins import DBSessionMixin
-
-ORMModelT = TypeVar("ORMModelT", bound=BaseORM)
+from src.infra.database.models import ORMModelT
+from src.infra.database.repositories.mixins import SqlalchemySessionMixin
 
 
 @dataclass
-class DBGenericRepository(DBSessionMixin, Generic[ORMModelT]):
+class SqlalchemyGenericRepository(SqlalchemySessionMixin, Generic[ORMModelT]):
     orm_model: type[ORMModelT]
 
     async def get_all(self):

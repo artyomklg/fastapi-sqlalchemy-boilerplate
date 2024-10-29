@@ -1,3 +1,5 @@
+from typing import TypeVar
+
 from sqlalchemy import MetaData
 from sqlalchemy.orm import DeclarativeBase
 
@@ -14,3 +16,9 @@ metadata = MetaData(
 
 class BaseORM(DeclarativeBase):
     metadata = metadata
+
+
+ORMModelT = TypeVar("ORMModelT", bound=BaseORM)
+
+
+__all__ = ["BaseORM", "ORMModelT"]
